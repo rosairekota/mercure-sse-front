@@ -6,8 +6,8 @@ export default function Patients() {
 
     useEffect(() => {
         const eventSource = new EventSource(
-            //'http://localhost:1337/.well-known/mercure?topic=patient/add&topic=patient/transfer'
-            'http://10.243.1.27:9092/events'
+            'http://localhost:1337/.well-known/mercure?topic=patient/add&topic=patient/transfer'
+           
         );
         eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);
