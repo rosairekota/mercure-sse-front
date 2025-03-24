@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 // Assure-toi que l'URL est correcte
 
 export default function Home() {
-  const [patientData, setPatientData] = useState<any>(null);
+  const [patientData, setPatientData] = useState<any>([]);
   const  socket = useSocket('http://localhost:4500');
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function Home() {
     });
     socket.on('patient_created', (data) => {
      // console.log('Mise à jour patient:', data);  // Affiche l'événement dans la console
-      setPatientData(data);  // Met à jour l'interface utilisateur avec les données du patient
+      setPatientData((prev:any)=>[...prev, data]);  // Met à jour l'interface utilisateur avec les données du patient
     })
 
     socket.on('disconnect', () => {
@@ -36,15 +36,19 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Dashboard de l'Hôpital B</h1>
-      {patientData ? (
-        <div>
-          <p>Patient ID: {patientData?.patientId}</p>
-          <p>{patientData?.name}</p>
+      <div className="container mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-4">Dashboard de l'Hôpital B</h1>
+            {patientData.length > 0 ? (
+                patientData.map((patient:any, index:number) => (
+                    <div key={index} className="bg-white shadow-md rounded-lg p-4 mb-4">
+                        <p className="text-lg font-semibold">Patient ID: {patient?.id}</p>
+                        <p className="text-gray-700">{patient?.name}</p>
+                    </div>
+                ))
+            ) : (
+                <p className="text-gray-500">Pas de transfert de patient en cours.</p>
+            )}
         </div>
-      ) : (
-        <p>Pas de transfert de patient en cours.</p>
-      )}
     </div>
   );
 }

@@ -20,7 +20,7 @@ export default function Patients() {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Dashboard de l'Hôpital B</h1>
+            <h1 className="text-2xl font-bold mb-4">Dashboard de l'Hôpital B avec mercure</h1>
             {patientData.length > 0 ? (
                 patientData.map((patient, index) => (
                     <div key={index} className="bg-white shadow-md rounded-lg p-4 mb-4">
